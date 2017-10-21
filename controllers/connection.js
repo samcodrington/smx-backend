@@ -1,4 +1,4 @@
-const secret = require('../../credentials.js');
+const secret = require('../credentials.js');
 const mongoose = require('mongoose');
 const Textbook = require("../models/textbook");
 
