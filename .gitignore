@@ -1,0 +1,4 @@
+#GITIGNORE
+
+#Backend Ignores
+backend/node_modules/*
