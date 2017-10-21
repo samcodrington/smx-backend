@@ -1,3 +1,4 @@
+const secret = require('../../credentials.js');
 const mongoose = require('mongoose');
 const Textbook = require("../models/textbook");
 
@@ -5,7 +6,7 @@ const Textbook = require("../models/textbook");
 mongoose.Promise = global.Promise;
 
 var database = function(){
-  mongoose.connect("mongodb://localhost/elec498test");
+  mongoose.connect(secret);
 
   mongoose.connection.once("open",function(){
     console.log("connection has been made, now make fireworks...");
