@@ -1,4 +1,5 @@
 #GITIGNORE
+credentials.js
 
 #Backend Ignores
 backend/node_modules/*
