@@ -12,7 +12,7 @@ var db = require('./controllers/connection.js');
 
 var app = express();
 
-app.set('view engine', 'jade');
+//app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
@@ -46,4 +46,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
  */
+ 
 module.exports = app;
