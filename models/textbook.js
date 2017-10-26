@@ -4,6 +4,12 @@ const Schema = mongoose.Schema;
 //Create Schema and model
 const textbookSchema = new Schema({
   title: String,
+  isbn: String,
+  price: Number,
+  associatedprogram: String,
+  Condition: String,
+  owner: String,            //primary key of user record that owns textbook
+  Tags: [String]            //Optional tags field to for searching
 });
 
 const Textbook = mongoose.model("textbook", textbookSchema);
