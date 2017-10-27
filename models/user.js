@@ -9,7 +9,7 @@ const userSchema = new Schema({
   nameLast: String,
   email: String,
   school: String,
-  postedtextbooks: []  //stores primary key of textbook records posted by user
+  postedtextbooks: [],  //stores primary key of textbook records posted by user
   savedtextbooks: [] //stores primary key of textbook records saved by user (for purchasing)
 });
 

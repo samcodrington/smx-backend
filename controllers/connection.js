@@ -13,14 +13,5 @@ var database = function(){
   }).on("error",function(error){
     console.log("error");
   });
-
-  var text = new Textbook({
-    name: "test"
-  });
-
-  text.save().then(function(){//create a promise on this method
-  });//asynchronous process
-
 }
-
 module.exports = database;

@@ -9,6 +9,8 @@ var users = require('./routes/users');
 
 //require database
 var db = require('./controllers/connection.js');
+//require controllers
+var addUser = require('./controllers/addUser.js');
 
 var app = express();
 
@@ -24,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('*', function(req,res,next){
   console.log("You've reached our backend");
   db();
+  addUser(FrontendUser);
 });
 //app.use('/users', users);
 /*
@@ -46,5 +49,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
  */
- 
+
+ //assume right now this is the object coming from the frontend
+ var FrontendUser = {
+   username: "13mtfb",
+   password: "13mtfb",
+   nameFirst: "Matt",
+   nameLast: "Burton",
+   email: "13mtfb@queensu.ca",
+   school: "Queens University"
+ };
+
 module.exports = app;
