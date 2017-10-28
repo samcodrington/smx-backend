@@ -9,7 +9,6 @@ var users = require('./routes/users');
 
 //require database
 var db = require('./controllers/connection.js');
-//require controllers
 
 var app = express();
 
@@ -24,7 +23,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function(req,res,next){
   console.log("You've reached our backend");
-  db();
+  //ensure database connection was succesfull
+  if (db.connection.readyState){
+    console.log("database ready");
+  }
+  else {
+    console.log("database unavailable");
+  }
   next();
 });
 
