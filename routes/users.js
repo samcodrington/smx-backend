@@ -22,8 +22,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* POST users listing. */
-router.post('/', urlencodedParser, function(req,res,next){
-  console.log("Post Request");  
+router.post('/create', urlencodedParser, function(req,res,next){
+  console.log("Post Request");
   addUser(req.body);
   // need error handling // TODO
   res.send('Successfully signed up user');
