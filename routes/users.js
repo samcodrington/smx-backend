@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var addUser = require('../controllers/addUser');
+
+//Add userMethods
+var userMethods = require('../controllers/addUser');
+var addUser = userMethods.addUser;
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
