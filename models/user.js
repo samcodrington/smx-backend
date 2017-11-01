@@ -11,7 +11,7 @@ const userSchema = new Schema({
   school: String,
   postedtextbooks: [],  //stores primary key of textbook records posted by user
   savedtextbooks: [] //stores primary key of textbook records saved by user (for purchasing)
-}, {timestamps: {createdAt: 'created_at'}
+}, {timestamps: {createdAt: 'created_at'}//timestamps store UTC time by default
 });
 
 const User = mongoose.model("user", userSchema);
