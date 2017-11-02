@@ -8,7 +8,7 @@ exports.addUser = function(FrontendUser){
   //ensure that username is unique (i.e. hasn't already been taken)
   User.findOne({username: FrontendUser.username}).then(function(resolve,reject){
     //check to see if returned user record matches username
-    //resolve returns the records if an entry exists, if not it returnes a
+    //resolve returns a record if an entry exists, if not it returnes a
     //null object
     if (resolve){
         //this should throw an error to frontend
@@ -21,7 +21,7 @@ exports.addUser = function(FrontendUser){
       //error in querying database - throw an error to frontend
     }
   });
-
+  console.log("DOES THIS HAPPEN FIRST????");
   if(FrontendUser.password == undefined){
     //this should throw an error to frontend
   }
@@ -58,6 +58,14 @@ exports.addUser = function(FrontendUser){
 
 };
 
+//Authenticates user requesting login by returning a promise on the database
+//findOne method:
+//resolve NULL - user is invalid
+//otherwise user is valid
+exports.validateUserLogin = function(user){
+  //asssume user object contains username and password as parameters
+return User.findOne({username: user.username, password: user.password});
+};
 
 
 //returns a 1 if email is valid
