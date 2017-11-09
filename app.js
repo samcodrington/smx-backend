@@ -12,7 +12,7 @@ var db = require('./controllers/connection.js');
 
 var app = express();
 
-app.set('view engine', 'jade');
+//app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(logger('dev'));
@@ -23,8 +23,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function(req,res,next){
   console.log("You've reached our backend");
-  db();
+  //ensure database connection was succesfull
+  if (db.connection.readyState){
+    console.log("database ready");
+  }
+  else {
+    console.log("database unavailable");
+  }
+  next();
 });
+
+app.use('/users/', users); //All user requests go to routes/users.js
 //app.use('/users', users);
 /*
 // catch 404 and forward to error handler
@@ -46,4 +55,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
  */
+
+ //assume right now this is the object coming from the frontend
+ var FrontendUser = {
+   username: "13mtfb",
+   password: "13mtfb",
+   nameFirst: "Matt",
+   nameLast: "Burton",
+   email: "13mtfb@queensu.ca",
+   school: "Queens University"
+ };
+
 module.exports = app;
