@@ -28,29 +28,39 @@ router.get('/', function(req, res, next) {
 /* POST users listing. */
 router.post('/create', urlencodedParser, function(req,res,next){
   console.log("Post Request - Create");
-  addUser(req.body);
-  // need error handling // TODO
-  res.send('Successfully signed up user');
-  next();
+  addUser(req.body).then(function(resolve){
+      //user added Successfully
+      res.send("Successfully signed up user");
+      console.log("Successfully signed up user");
+      next();
+    }).catch( function(err){
+      // need error handling
+    console.log(err);
+    res.send("Unsuccessfuly signed up user");
+    console.log("Unsuccessfuly signed up user");
+  });
 });
 
 /* POST validate user */
 router.post('/validate', urlencodedParser, function(req,res,next){
   console.log("Post Request - Validate");
-  validateUserLogin(req.body).then(function(resolve,reject){
+  validateUserLogin(req.body).then(function(resolve){
     if (resolve){
       //user is validated
+      console.log("user is valid");
       res.send("user is valid");
       next();
     }
     else {
       //user is invalid
+     return Promise.reject("user is invalid");
       res.send("user is invalid");
-      next();
     }
+  }).catch (function(err){
+      console.log(err);
+      res.send("error");
   });
   // change response based on validation token // TODO
-
 });
 
 
