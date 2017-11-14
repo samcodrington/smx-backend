@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const User = require("../models/user");
+const User = require("../models/userSchema");
 
 //adds user FrontendUser to the database with error checking
 exports.addUser = function(FrontendUser){
@@ -16,33 +16,12 @@ return  User.findOne({username: FrontendUser.username})
         return Promise.reject("User is taken");
       }
       else {
-        console.log("USER UNIQUE");
         //perform error checking on user
-        if(FrontendUser.password == undefined){
-          //this should throw an error to frontend
-          return Promise.reject("No password");
-        }
-        if(FrontendUser.nameFirst == undefined){
-          //behaviour on no name being entered. My thought right now is that we
-          //keep to nosql design and not waste storage by storing a default value
-          //other checks could be done here though
-        }
-        if(FrontendUser.nameLast == undefined){
-          //See nameFirst
-        }
-        if (ensureEmailValid(FrontendUser.email) == 0){
-          //this should throw an error to frontend
-          console.log("invalid email");
-        }
-        if (FrontendUser.school == undefined){
-          //could either implement this as a dropdown list or try to match the string
-          //to a list of saved schools
-        }
-        return Promise.resolve("User validated");
+        return ensureUserValid(FrontendUser);
       }
   })
   .then( function(resolve){
-    //Parse frontend input into user schema
+    //Create instance of User model (Document) and parse in user data
     var newUser = new User({
       username: FrontendUser.username,
       password: FrontendUser.password,
@@ -51,18 +30,40 @@ return  User.findOne({username: FrontendUser.username})
       email: FrontendUser.email,
       school: FrontendUser.school,
     });
+    //return promise on previous promise and saving record to database
     return Promise.all(resolve,newUser.save());
   });
 };
 
-//Authenticates user requesting login by returning a promise on the database
-//findOne method:
-//resolve NULL - user is invalid
-//otherwise user is valid
-exports.validateUserLogin = function(user){
-  //asssume user object contains username and password as parameters
-return User.findOne({username: user.username, password: user.password});
-};
+//supporting functions for addUser function
+
+//Returns a resolved promise based on whether the user parameters are validated
+//rejects the promise if parameters are invalid
+ensureUserValid = function(user){
+    if(user.password == undefined){
+      //this should throw an error to frontend
+      return Promise.reject("No password");
+    }
+    if(user.nameFirst == undefined){
+      //behaviour on no name being entered. My thought right now is that we
+      //keep to nosql design and not waste storage by storing a default value
+      //other checks could be done here though
+      return Promise.reject("No first name");
+    }
+    if(user.nameLast == undefined){
+      //See nameFirst
+      return Promise.reject("No last name");
+    }
+    if (ensureEmailValid(user.email) == 0){
+      //this should throw an error to frontend
+      return Promise.reject("invalid email");
+    }
+    if (user.school == undefined){
+      //could either implement this as a dropdown list or try to match the string
+      //to a list of saved schools
+    }
+    return Promise.resolve("User is validated");
+}
 
 
 //returns a 1 if email is valid
@@ -74,7 +75,6 @@ ensureEmailValid = function(email){
   //ensure only one occurence of @ sign
   //ensure a period (for web domain occcurs after @ sign)
   if (at == atLast && periodLast > atLast){
-    console.log("valid email")
     return 1;
   }
   else {

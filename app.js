@@ -56,14 +56,4 @@ app.use(function(err, req, res, next) {
 });
  */
 
- //assume right now this is the object coming from the frontend
- var FrontendUser = {
-   username: "13mtfb",
-   password: "13mtfb",
-   nameFirst: "Matt",
-   nameLast: "Burton",
-   email: "13mtfb@queensu.ca",
-   school: "Queens University"
- };
-
 module.exports = app;
