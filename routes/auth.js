@@ -1,10 +1,13 @@
 const router = require('express').Router();
 
-router.get('login', (req,res) => {
-    res.send('logged in');
+router.post('/login', (req,res) => {
+    console.log('accessing login');
+    
+    //res.render('logged in'); 
+    //^--throws error due to lack of views engine
 });
 
-router.get('logout', (req,res) => {
-    res.send('logged out');
+router.post('/logout', (req,res) => {
+    //res.send('logged out');
 });
 module.exports = router;
