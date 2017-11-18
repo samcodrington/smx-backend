@@ -4,8 +4,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const passport = require('passport');
 const passportSetup = require('./config/passport');
-
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
@@ -14,6 +14,10 @@ var auth = require('./routes/auth');
 var db = require('./controllers/connection.js');
 
 var app = express();
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //app.set('view engine', 'jade');
 
