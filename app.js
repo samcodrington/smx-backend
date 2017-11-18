@@ -35,6 +35,7 @@ app.use('*', function(req,res,next){
 });
 
 app.use('/users/', users); //All user requests go to routes/users.js
+app.use('/auth/', auth);
 //app.use('/users', users);
 /*
 // catch 404 and forward to error handler
