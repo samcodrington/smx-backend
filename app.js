@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var auth = require('./routes/auth');
 
 //require database
 var db = require('./controllers/connection.js');
