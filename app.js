@@ -16,9 +16,17 @@ var auth = require('./routes/auth');
 var db = require('./controllers/connection.js');
 
 var app = express();
+//init cookies
+app.use(cookieSession({
+  //set cookie properties here
+  maxAge: 5*60*1000, //5 minute cookie expiry
+  keys: 'blahblahblah' //will replace later
+}));
+
 // initialize passport
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 
 //app.set('view engine', 'jade');
