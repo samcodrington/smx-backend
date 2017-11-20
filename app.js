@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 
 const passport = require('passport');
 const passportSetup = require('./config/passport');
-const cookieSession = require('cookie-session');
+const session = require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -26,13 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-//init cookies
-app.use(cookieSession({
-  //set cookie properties here
-  maxAge: 5*60*1000, //5 minute cookie expiry
-  keys: 'blahblahblah' //will replace later
-}));
+app.use(session({ secret: 'blahblah' }));
 
 // initialize passport
 app.use(passport.initialize());

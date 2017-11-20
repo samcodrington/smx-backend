@@ -4,7 +4,8 @@ const passport = require('passport');
 router.post('/login', passport.authenticate('login'),
     function(req,res){
         console.log('accessing login');
-        res.send(200, req.user);
+        console.log(req.session);
+        res.status(200).send(req.user);
     //res.render('logged in'); 
     //^--throws error due to lack of views engine
 });
