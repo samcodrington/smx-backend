@@ -9,9 +9,7 @@ passport.use('login', new LocalStrategy({
     //Verify Callback function
     function(username, password, done){
         console.log('verify callback function fired!');
-        console.log()
         User.findOne({username: username}, function (err, user){
-            console.log(user);
             if (err) {
                 console.log('error!');
                 return done(err); }
@@ -29,12 +27,12 @@ passport.use('login', new LocalStrategy({
 ));
 
 passport.serializeUser(function(user,done){
-    console.log('Serializing User: ' + user);
+    console.log('Serializing User!');
     done(null, user.id);
 });
 
-passport.deserializeUser(function(id, cb){
-    User.findByID(id).then((user) => {
+passport.deserializeUser(function(id, done){
+    User.findOne({id: id}).then((user) => {
         done(null, user.id);
     })
 });

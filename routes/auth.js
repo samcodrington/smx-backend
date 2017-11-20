@@ -11,11 +11,13 @@ router.post('/login', passport.authenticate('login'),
 });
 
 router.post('/logout', function(req,res) {
+    console.log("beginning logout" + req.session);
     if (req.user){
+        console.log("User is logged in");
         req.logout();
-        res.send(200, 'logged out');
+        res.status(200).send('logged out');
     }
-    else res.send(404, 'not logged in!');
+    else res.status(404).send('not logged in!');
         
     //res.send('logged out');
 });

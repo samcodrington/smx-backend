@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({ secret: 'blahblah', cookie: { maxAge: 5*60*1000} }));
+app.use(session({ secret: 'blahblah', cookie: { maxAge: 5*60*1000} })); // maxAge is 5 minutes in ms
 
 // initialize passport
 app.use(passport.initialize());
