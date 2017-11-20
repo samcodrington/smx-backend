@@ -32,7 +32,9 @@ passport.serializeUser(function(user,done){
 });
 
 passport.deserializeUser(function(id, done){
-    User.findOne({id: id}).then((user) => {
+    console.log('Deserializing User!');
+    console.log('User ID is:' + id);
+    User.findOne({_id: id}).then((user) => {
         done(null, user.id);
     })
 });
