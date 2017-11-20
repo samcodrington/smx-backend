@@ -16,6 +16,17 @@ var auth = require('./routes/auth');
 var db = require('./controllers/connection.js');
 
 var app = express();
+
+
+//app.set('view engine', 'jade');
+
+// uncomment after placing your favicon in /public
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
 //init cookies
 app.use(cookieSession({
   //set cookie properties here
@@ -27,16 +38,6 @@ app.use(cookieSession({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
-//app.set('view engine', 'jade');
-
-// uncomment after placing your favicon in /public
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('*', function(req,res,next){
   console.log("You've reached our backend");
