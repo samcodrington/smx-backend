@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
-var User = require('../models/user');
+var User = require('../models/userSchema');
 
 passport.use('login', new LocalStrategy({
         //if we want to change any defaults put them here
@@ -17,7 +17,7 @@ passport.use('login', new LocalStrategy({
                 console.log('error! can\'t find user');
                 return done(err, false);}
             if (user.password != password){
-                console.log('error! wrong password');                
+                console.log('error! wrong password');
                 return done(err, false);
             }
             console.log('found user');
