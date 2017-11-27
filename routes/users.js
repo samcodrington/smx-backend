@@ -11,8 +11,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 //All routing methods are mounted on /users/
 router.all('*',function(req,res, next){
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Access-Control-Allow-Origin');
+
+
   //Logging comments
-  console.log("Request made for " + req.baseURL);
+  console.log("Request made for (URL) " + req.baseURL);
+  console.log("Request made for (PATH) " + req.path);
   console.log("Body is as follows");
   console.log(req.body);
   next();
