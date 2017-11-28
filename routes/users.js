@@ -22,7 +22,7 @@ router.all('*',function(req,res, next){
   console.log("Body is as follows");
   console.log(req.body);
   next();
-})
+});
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {

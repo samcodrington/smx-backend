@@ -10,6 +10,7 @@ const session = require('express-session');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var textbooks = require('./routes/textbooks');
 var auth = require('./routes/auth');
 
 //require database
@@ -45,6 +46,7 @@ app.use('*', function(req,res,next){
   next();
 });
 
+app.use('/textbooks/',textbooks); //All textbook requests got to routes/textbooks.js
 app.use('/users/', users); //All user requests go to routes/users.js
 app.use('/auth/', auth);
 //app.use('/users', users);

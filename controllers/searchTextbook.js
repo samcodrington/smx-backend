@@ -1,0 +1,41 @@
+const mongoose = require('mongoose');
+const Textbook = require("../models/textbookSchema");
+
+//returns an array of textbook documents which match the search parameter
+exports.searchTextbook = function(searchField){
+  //perform basic error checking on the searchField variable
+  if (searchField === ''){
+    //return promise error
+  }
+  //parse a regular expression to use in search query
+  var searchString = parseRegularExpression(searchField);
+  console.log("searchString=" + searchString);
+  return  Textbook.find({$or:[
+    {title: searchString}//,
+    //{isbn: searchString},
+    //{associatedprogram: searchString},
+    //{Condition: searchString}
+    //Ignore for now
+    //{price: searchString},
+    //owner: searchString,            //primary key of user record that owns textbook
+    //Tags: [String]            //Optional tags field to for searching
+  ]})
+  .then(function(resolve){
+    console.log(JSON.stringify(resolve));
+    //call orderResponse with resolve object
+    return Promise.resolve(resolve);
+  });
+};
+
+
+//returns a regular expression which ignores whitespace and capitalization
+parseRegularExpression = function(string){
+  //to implement
+  return new RegExp(string + "\\s+");
+  //return string
+};
+
+//returns an ordered object array based on relevent parameters
+orderResponse = function(textbookArray){
+  //to implement
+};
