@@ -42,6 +42,13 @@ app.use('*', function(req,res,next){
   else {
     console.log("database unavailable");
   }
+  //refresh user cookie if user still logged in
+  if (req.user){
+    console.log("User Logged in until: " + req.session.cookie.expires);
+    req.session.touch();
+    console.log("Updated cookie to: " + req.session.cookie.expires);
+  }
+  else console.log("No User logged in");
   next();
 });
 
