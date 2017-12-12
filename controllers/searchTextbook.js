@@ -22,8 +22,14 @@ exports.searchTextbook = function(searchField){
   ]})
   .then(function(resolve){
     console.log(JSON.stringify(resolve));
+    console.log("Number of results: "+resolve.length);
     //call orderResponse with resolve object
+    if (!isEmpty(resolve)){ //resolve promise if object not emptpy, i.e. at least one result was found
     return Promise.resolve(resolve);
+    }
+    else {
+    return Promise.reject("No results!");
+    }
   });
 };
 
@@ -31,11 +37,20 @@ exports.searchTextbook = function(searchField){
 //returns a regular expression which ignores whitespace and capitalization
 parseRegularExpression = function(string){
   //to implement
-  return new RegExp(string + "\\s+");
-  //return string
+  //return new RegExp(string + "\\s+");
+  return string
 };
 
 //returns an ordered object array based on relevent parameters
 orderResponse = function(textbookArray){
   //to implement
 };
+
+//return true if search result has no entries
+isEmpty = function(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}

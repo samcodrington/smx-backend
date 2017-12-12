@@ -33,13 +33,13 @@ router.get('/search', urlencodedParser, function(req,res,next){
   var searchString =req.headers.searchfield;
   searchTextbook(searchString).then(function(resolve){
     console.log("resolve:" + JSON.stringify(resolve));
-    res.send(JSON.stringify(resolve));
+    res.send(resolve);
     console.log("Successfully returned textbooks");
     next();
   }).catch( function(err){
     // need error handling
   console.log(err);
-  res.send("Error no textbooks returned");
+  res.send('-1');
   console.log("Error no textbooks returned");
   });
 });
