@@ -7,7 +7,7 @@ var connect_id = process.env.connect_id || secret;
 mongoose.Promise = global.Promise;
 
 
-mongoose.connect(secret, {
+mongoose.connect(connect_id, {
     useMongoClient: true
 });
 
