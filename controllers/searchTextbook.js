@@ -11,10 +11,12 @@ exports.searchTextbook = function(searchField){
   var searchString = parseRegularExpression(searchField);
   console.log("searchString=" + searchString);
   return  Textbook.find({$or:[
-    {title: searchString}//,
-    //{isbn: searchString},
-    //{associatedprogram: searchString},
-    //{Condition: searchString}
+    {title: searchString},
+    {isbn: searchString},
+    {publisher: searchString},
+    {author: searchString},
+    {associatedprogram: searchString},
+    {Condition: searchString}
     //Ignore for now
     //{price: searchString},
     //owner: searchString,            //primary key of user record that owns textbook

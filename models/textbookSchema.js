@@ -5,6 +5,8 @@ const Schema = mongoose.Schema;
 const textbookSchema = new Schema({
   title: String,
   isbn: String,
+  publisher: String,
+  author: String,
   price: Number,
   associatedprogram: String,
   Condition: String,
