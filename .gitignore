@@ -3,4 +3,4 @@ credentials.js
 npm-debug.log
 
 #Backend Ignores
-backend/node_modules/*
+node_modules/*

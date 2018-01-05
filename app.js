@@ -4,13 +4,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+const passport = require('passport');
+const passportSetup = require('./config/passport');
+const session = require('express-session');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
+var textbooks = require('./routes/textbooks');
+var auth = require('./routes/auth');
 
 //require database
 var db = require('./controllers/connection.js');
 
 var app = express();
+
 
 //app.set('view engine', 'jade');
 
@@ -20,6 +27,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'blahblah', cookie: { maxAge: 5*60*1000} })); // maxAge is 5 minutes in ms
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use('*', function(req,res,next){
   console.log("You've reached our backend");
@@ -33,7 +46,9 @@ app.use('*', function(req,res,next){
   next();
 });
 
+app.use('/textbooks/',textbooks); //All textbook requests got to routes/textbooks.js
 app.use('/users/', users); //All user requests go to routes/users.js
+app.use('/auth/', auth);
 //app.use('/users', users);
 /*
 // catch 404 and forward to error handler
@@ -55,15 +70,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
  */
-
- //assume right now this is the object coming from the frontend
- var FrontendUser = {
-   username: "13mtfb",
-   password: "13mtfb",
-   nameFirst: "Matt",
-   nameLast: "Burton",
-   email: "13mtfb@queensu.ca",
-   school: "Queens University"
- };
 
 module.exports = app;
