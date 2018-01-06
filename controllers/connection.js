@@ -1,4 +1,4 @@
-const secret = require('../credentials.js');
+//const secret = require('../credentials.js');
 const mongoose = require('mongoose');
 
 var connect_id = process.env.connect_id || secret;
