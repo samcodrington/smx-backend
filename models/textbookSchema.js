@@ -7,7 +7,7 @@ const textbookSchema = new Schema({
   isbn: String,
   publisher: String,
   author: String,
-  price: Number,
+  price: String,
   associatedprogram: String,
   Condition: String,
   owner: String,            //primary key of user record that owns textbook
