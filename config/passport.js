@@ -1,7 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 
-var User = require('../models/user');
+var User = require('../models/userSchema');
 
 passport.use('login', new LocalStrategy({
         //if we want to change any defaults put them here
