@@ -46,11 +46,6 @@ parseRegularExpression = function(string){
   //return string
 };
 
-//returns an ordered object array based on relevent parameters
-orderResponse = function(textbookArray){
-  //to implement
-};
-
 //return true if search result has no entries
 isEmpty = function(obj) {
     for(var key in obj) {
