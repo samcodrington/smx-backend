@@ -12,6 +12,7 @@ See the [Wiki](https://github.com/samcodrington/smx-backend/wiki) for more detai
 
 Download or clone this repository to your computer. Run the following terminal command to start the application:
   >>npm install
+  
   >>npm start
   
 To run locally, go to app/connection.js and uncomment the secret definition and add in your config file to connect to your local database at the top level.
