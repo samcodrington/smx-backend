@@ -13,8 +13,8 @@ While using postman, or a browser with multiple tabs for example, the cookies fo
 //Logging comments
 router.use('*', function(req,res,next){
     console.log("Request made for " + req.url);
-    console.log("Body is as follows");
-    console.log(req.body);
+    console.log("Body is as follows" + JSON.stringify(req.body));
+    console.log("Cookies as follows:" + JSON.stringify(req.cookies));
     next();
 });
 
@@ -28,7 +28,7 @@ router.post('/login', passport.authenticate('login'),
 
 router.post('/logout', function(req,res) {
     console.log("beginning logout");
-    //console.log(req.headers.cookie); //this is where cookie is checked!!
+    console.log(req.headers.cookie); //this is where cookie is checked!!
     if (req.user){
         console.log("User is logged out");
         req.logout();
