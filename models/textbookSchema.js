@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const textbookSchema = new Schema({
   title: String,
   isbn: String,
-  price: Number,
+  publisher: String,
+  author: String,
+  price: String,
   associatedprogram: String,
   Condition: String,
   owner: String,            //primary key of user record that owns textbook
