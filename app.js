@@ -18,6 +18,9 @@ var db = require('./controllers/connection.js');
 
 var app = express();
 
+//allow origin variable for dev and providing
+const allow_origin_url = process.env.REACT_APP_FRONTEND_URL || "http://localhost:3000";
+
 
 //app.set('view engine', 'jade');
 
@@ -33,7 +36,7 @@ app.use(session({ secret: 'blahblah', cookie: { maxAge: 5*60*1000} })); // maxAg
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req,res,next){
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000, https://smx-dev-frontend.herokuapp.com"); //TODO need to update this with hosted sitename!!
+  res.header("Access-Control-Allow-Origin", allow_origin_url);
   res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE, OPTIONS")
   res.header("Access-Control-Allow-Headers", "authorization, Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Credentials", "true");
