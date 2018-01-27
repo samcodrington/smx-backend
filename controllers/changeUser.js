@@ -1,14 +1,15 @@
 const mongoose = require('mongoose');
 const User = require("../models/userSchema");
+const Textbook = require("../models/textbookSchema");
 
 //determines which fields were changed on the user schema and calls updateFields()
 //a password or username field require additional calls to checkPassword() and
 //checkUsername(), respectively
 //due to the format of the user form. There are three possible use cases for this function call,
 //which is passed as a integer in the second parameter of the function
-// useCase == 1: Profile form (nameFirst,nameLast,email,school)
-// useCase == 2: Account form (username, password)
-// useCase == 3: Delete account
+// useCase == 1: Profile form (1-1111) (nameFirst,nameLast,email,school)
+// useCase == 2: Account form (10 000 - 110 000) (username, password)
+// useCase == 3: Delete account (0)
 exports.changeUser = function(user, useCase){
   //determine which fields are being changed
   if (useCase==1){//Profile form
@@ -36,6 +37,11 @@ exports.changeUser = function(user, useCase){
   }
   else if (useCase==3){//Delete account
       console.log("Use case 1");
+      //delete posts associated with the user
+      return Textbook.deleteMany({owner: user._id})
+      .then(function(resolve){
+        return Promise.all(resolve, User.deleteOne({_id: user._id}));
+      })
   }
   else {//invalid use case
     return Promise.reject("Invalid setting change");
