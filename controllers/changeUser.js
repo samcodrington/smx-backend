@@ -36,11 +36,11 @@ exports.changeUser = function(user, useCase){
     }
   }
   else if (useCase==3){//Delete account
-      console.log("Use case 1");
+      console.log("Use case 3");
       //delete posts associated with the user
       return Textbook.deleteMany({owner: user._id})
       .then(function(resolve){
-        return Promise.all(resolve, User.deleteOne({_id: user._id}));
+        return Promise.all([resolve, User.deleteOne({_id: user._id})]);
       })
   }
   else {//invalid use case
