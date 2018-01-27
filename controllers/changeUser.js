@@ -11,10 +11,18 @@ const User = require("../models/userSchema");
 // useCase == 3: Delete account
 exports.changeUser = function(user, useCase){
   //determine which fields are being changed
-  if (useCase===1){//Profile form
+  if (useCase==1){//Profile form
+    console.log("Use case 1");
+    if (user.nameFirst === undefined || user.nameLast === undefined || user.email === undefined || user.school === undefined){
+      //one or more parameters invalid, reject
+      return Promise.reject("user parameters missing");
+    }
+    else {//parameters exist, updating user
     return findByIdAndUpdate(user._id, {nameFirst: user.nameFirst, nameLast: user.nameLast, email: user.email, school: user.school});
+    }
   }
-  else if (useCase===2){//Account form
+  else if (useCase==2){//Account form
+    console.log("Use case 2");
     //Assume valid password determined by frontend
     if (!(user.username===undefined)){//username is being updated
       return checkUsername(user.username)
@@ -26,8 +34,8 @@ exports.changeUser = function(user, useCase){
       return findByIdAndUpdate(user._id, {password: user.password});
     }
   }
-  else if (useCase===3){//Delete account
-
+  else if (useCase==3){//Delete account
+      console.log("Use case 1");
   }
   else {//invalid use case
     return Promise.reject("Invalid setting change");
