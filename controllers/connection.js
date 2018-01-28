@@ -1,7 +1,7 @@
 //const secret = require('../credentials.js');
 const mongoose = require('mongoose');
 
-var connect_id = process.env.connect_id || secret;
+var connect_id = process.env.connect_id || require('../credentials.js');
 
 //ES6 Promises
 mongoose.Promise = global.Promise;
