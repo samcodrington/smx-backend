@@ -6,6 +6,9 @@ var userMethods = require('../controllers/addUser');
 var addUser = userMethods.addUser;
 var validateUserLogin = userMethods.validateUserLogin;
 
+var settingsMethods = require('../controllers/changeUser');
+var changeUser = settingsMethods.changeUser;
+
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
@@ -67,6 +70,22 @@ router.post('/validate', urlencodedParser, function(req,res,next){
       res.send("error");
   });
   // change response based on validation token // TODO
+});
+
+router.post('/settings', urlencodedParser, function(req,res,next){
+  console.log("Post Request - change user settings");
+  var useCase = req.body.useCase;
+  var user = req.body.user;
+  changeUser(user, useCase).then(function(resolve){
+    console.log("updated user settings");
+    console.log(resolve);
+    res.send(resolve);
+    next();
+  }).catch (function(err){
+    console.log("error updating user settings");
+    console.log(err);
+    res.send("error");
+  });
 });
 
 
