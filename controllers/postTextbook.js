@@ -3,7 +3,8 @@ const Textbook = require("../models/textbookSchema");
 const User = require("../models/userSchema");
 
 //adds textBook FrontendTextbook to the database with error checking
-exports.postTextbook = function(FrontendTextbook){
+exports.postTextbook = function(FrontendTextbook, uid){
+  console.log("User Id is" + uid);
   //perform basic error checking on textbook object
   return ensureTextbookValid(FrontendTextbook)
   .then(function(resolve){
@@ -22,12 +23,9 @@ exports.postTextbook = function(FrontendTextbook){
   .then( function(resolve){
     //textbook saved properly, resolve object should
     //hold textbook data, including _id prop
-    var user = {//example 13mtfb user
-      id: "5a1c1b2562651033b86008c0"
-    };
     //Saves the _id of the posted textbook into the postedtextbooks[] array
     //of the associated user
-    return Promise.all([resolve,User.findByIdAndUpdate(user.id, {$push:{postedtextbooks: resolve._id}})]);
+    return Promise.all([resolve,User.findByIdAndUpdate(uid, {$push:{postedtextbooks: resolve._id}})]);
   });
 };
 
