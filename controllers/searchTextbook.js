@@ -39,13 +39,11 @@ exports.searchTextbook = function(searchField){
 //returns a regular expression which ignores whitespace and capitalization
 parseRegularExpression = function(string){
   //to implement
-  //return new RegExp(string + "\\s+");
-  return string
-};
-
-//returns an ordered object array based on relevent parameters
-orderResponse = function(textbookArray){
-  //to implement
+  //replace ignores difference between word spacing in searchsting and matches
+  var ignoreSpace = string.replace(/\s+/,"\\s+");
+  //modifier i ignore capitalization
+  return new RegExp(ignoreSpace, 'i');
+  //return string
 };
 
 //return true if search result has no entries

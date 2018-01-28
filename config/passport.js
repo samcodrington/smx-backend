@@ -8,7 +8,6 @@ passport.use('login', new LocalStrategy({
     },
     //Verify Callback function
     function(username, password, done){
-        console.log('verify callback function fired!');
         User.findOne({username: username}, function (err, user){
             if (err) {
                 console.log('error!');

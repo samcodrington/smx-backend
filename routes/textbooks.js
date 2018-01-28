@@ -3,9 +3,10 @@ var router = express.Router();
 
 
 //Add textbook Methods
-var textbookMethods = require('../controllers/searchTextbook');
-var searchTextbook = textbookMethods.searchTextbook;
-
+var textbookSearch = require('../controllers/searchTextbook');
+var searchTextbook = textbookSearch.searchTextbook;
+var textbookPost = require('../controllers/postTextbook');
+var postTextbook = textbookPost.postTextbook;
 
 
 var bodyParser = require('body-parser');
@@ -21,8 +22,6 @@ router.all('*',function(req,res, next){
   //Logging comments
   console.log("Request made for (URL) in textbook " + req.baseURL);
   console.log("Request made for (PATH) in textbook " + req.path);
-  console.log("searchField is as follows");
-  console.log(req.headers.searchfield);
   next();
 });
 
@@ -43,5 +42,24 @@ router.get('/search', urlencodedParser, function(req,res,next){
   console.log("Error no textbooks returned");
   });
 });
+
+/* POST textbook post */
+router.post('/post', urlencodedParser, function(req,res,next){
+  console.log("POST request - post textbooks");
+  console.log("textbook to save: ", req.body.textbook);
+  postTextbook(req.body.textbook).then(function(resolve){
+    console.log("resolve:" + JSON.stringify(resolve));
+    res.send(resolve);
+    console.log("Successfully posted textbook");
+    next();
+  }).catch( function(err){
+    // need error handling
+  console.log(err);
+  res.send('-1');
+  console.log("Error textbook not posted");
+  });
+})
+
+
 
 module.exports = router;
