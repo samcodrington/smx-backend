@@ -6,6 +6,12 @@ var userMethods = require('../controllers/addUser');
 var addUser = userMethods.addUser;
 var validateUserLogin = userMethods.validateUserLogin;
 
+//Add textbook methods
+var textbookMethods = require("../controllers/getTextbook");
+var getUserSavedTextbook = textbookMethods.getUserSavedTextbook;
+var getUserPostedTextbook = textbookMethods.getUserPostedTextbook;
+
+//add settings methods
 var settingsMethods = require('../controllers/changeUser');
 var changeUser = settingsMethods.changeUser;
 
@@ -87,6 +93,36 @@ router.post('/settings', urlencodedParser, function(req,res,next){
     res.send("error");
   });
 });
+
+/* GET Saved Textbooks */
+router.get('/saved/:userID', urlencodedParser, function(req,res,next){
+  console.log("GET request - get saved textbooks");
+  getUserSavedTextbook(req.params.userID).then(function(resolve){
+    console.log("Successfully getted saved textbooks");
+    console.log(resolve);
+    res.send(resolve);
+    next();
+  }).catch (function(err){
+      console.log("error getting saved textbooks");
+      console.log(err);
+      res.send("error");
+    });
+})
+
+/* GET Posted Textbooks */
+router.get('/posted/:userID', urlencodedParser, function(req,res,next){
+  console.log("GET request - get saved textbooks");
+  getUserPostedTextbook(req.params.userID).then(function(resolve){
+    console.log("Successfully getted posted textbooks");
+    console.log(resolve);
+    res.send(resolve);
+    next();
+  }).catch (function(err){
+      console.log("error getting posted textbooks");
+      console.log(err);
+      res.send("error");
+    });
+})
 
 
 module.exports = router;
