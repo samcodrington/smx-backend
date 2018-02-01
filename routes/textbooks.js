@@ -7,7 +7,8 @@ var textbookSearch = require('../controllers/searchTextbook');
 var searchTextbook = textbookSearch.searchTextbook;
 var textbookPost = require('../controllers/postTextbook');
 var postTextbook = textbookPost.postTextbook;
-
+var getTextbook = require('../controllers/getTextbook');
+var getOneTextbook = getTextbook.getOneTextbook;
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -60,6 +61,22 @@ router.post('/post', urlencodedParser, function(req,res,next){
   });
 })
 
+
+/* GET one textbook */
+router.get('/get/:ID', urlencodedParser, function(req,res,next){
+  console.log("GET request - get a textbook");
+  getOneTextbook(req.params.ID).then(function(resolve){
+    console.log("resolve: " + JSON.stringify(resolve));
+    res.send(resolve);
+    console.log("Successfully getted textbook");
+    next();
+  }).catch( function(err){
+    // need error handling
+    console.log(err);
+    res.send('-1');
+    console.log("Error textbook not posted");
+  });
+})
 
 
 module.exports = router;
