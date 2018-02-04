@@ -12,7 +12,7 @@ return  User.findOne({username: FrontendUser.username})
     //null object
     if (resolve){
         //this should throw an error to frontend
-        console.log("USER TAKEN");
+        //console.log("USER TAKEN");
         return Promise.reject("User is taken");
       }
       else {
