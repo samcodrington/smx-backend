@@ -78,5 +78,20 @@ router.get('/get/:ID', urlencodedParser, function(req,res,next){
   });
 })
 
+/** DELETE one textbook -- sold */
+router.delete('/post/:ID', urlencodedParser, function(req,res,next){
+  console.log("DELETE request - Mark Textbook sold");
+  deleteOneTextbook(req.params.ID).then(function(resolve){
+    console.log("resolve: " + JSON.stringify(resolve));
+    res.send(resolve);
+    console.log("Successfully Deleted Textbook");
+  }).catch( function(err){
+    // need error handling
+  console.log(err);
+  res.send('-1');
+  console.log("Error could not find textbook");
+  });
+});
+
 
 module.exports = router;
