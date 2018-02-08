@@ -9,6 +9,8 @@ var textbookPost = require('../controllers/postTextbook');
 var postTextbook = textbookPost.postTextbook;
 var getTextbook = require('../controllers/getTextbook');
 var getOneTextbook = getTextbook.getOneTextbook;
+var deleteTextbook = require('../controllers/deleteTextbook');
+var deleteTextbookFromUser = deleteTextbook.deleteTextbookFromUser;
 
 var bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -81,16 +83,22 @@ router.get('/get/:ID', urlencodedParser, function(req,res,next){
 /** DELETE one textbook -- sold */
 router.delete('/post/:ID', urlencodedParser, function(req,res,next){
   console.log("DELETE request - Mark Textbook sold");
-  deleteOneTextbook(req.params.ID).then(function(resolve){
-    console.log("resolve: " + JSON.stringify(resolve));
-    res.send(resolve);
-    console.log("Successfully Deleted Textbook");
-  }).catch( function(err){
-    // need error handling
-  console.log(err);
-  res.send('-1');
-  console.log("Error could not find textbook");
-  });
+  if(req.user){
+    deleteTextbookFromUser(req.user, req.params.TID).then(function(resolve){
+      console.log("resolve: " + JSON.stringify(resolve));
+      res.send(resolve);
+      console.log("Successfully Deleted Textbook");
+    
+    }).catch(function(err){
+      // need error handling
+      console.log(err);
+      res.send('-1');
+      console.log("Error could not find textbook");
+    });
+  } else {
+    console.log("No User Logged In");
+    res.status(401).send('No User Logged In');
+  }
 });
 
 
