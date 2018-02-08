@@ -81,10 +81,10 @@ router.get('/get/:ID', urlencodedParser, function(req,res,next){
 })
 
 /** DELETE one textbook -- sold */
-router.delete('/post/:ID', urlencodedParser, function(req,res,next){
+router.delete('/delete/:ID', urlencodedParser, function(req,res,next){
   console.log("DELETE request - Mark Textbook sold");
   if(req.user){
-    deleteTextbookFromUser(req.user, req.params.TID).then(function(resolve){
+    deleteTextbookFromUser(req.user, req.params.ID).then(function(resolve){
       console.log("resolve: " + JSON.stringify(resolve));
       res.send(resolve);
       console.log("Successfully Deleted Textbook");
