@@ -49,7 +49,9 @@ router.get('/search', urlencodedParser, function(req,res,next){
 router.post('/post', urlencodedParser, function(req,res,next){
   console.log("POST request - post textbooks");
   console.log("textbook to save: ", req.body.textbook);
-  postTextbook(req.body.textbook).then(function(resolve){
+  //console.log("USER DATA: ");
+  //console.log(JSON.stringify(req.user));
+  postTextbook(req.body.textbook, req.user).then(function(resolve){
     console.log("resolve:" + JSON.stringify(resolve));
     res.send(resolve);
     console.log("Successfully posted textbook");
