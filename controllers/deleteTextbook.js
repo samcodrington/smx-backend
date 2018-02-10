@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Textbook = require("../models/textbookSchema");
 const User = require("../models/userSchema");
 
-function deleteTextbook(textbookID){
+exports.deleteTextbook = function(textbookID){
     return new Promise(function(resolve, reject){
         Textbook.findByIdAndRemove(textbookID)
-        .then(function(t){ resolve("Deleted Textbook #" + t);} 
-        .catch(function (t) {reject("Unable to Delete Textbook #" + t)};
+        .then(function(t){ resolve("Deleted Textbook #" + t);}) 
+        .catch(function (t) {reject("Unable to Delete Textbook #" + t)});
     });
 }
 
@@ -30,7 +30,7 @@ exports.deleteTextbookFromUser = function(UserID, textbookID){
                 
                 console.log("not empty");
                 var ind = userContainsTBook(u, textbookID);
-                console.log ("INdice: " + 0);
+                console.log ("INdice: " + ind);
                 
                 //if textbook not attached to user
                 if (ind == 0){
