@@ -14,6 +14,7 @@ exports.deleteTextbookFromUser = function(textbookID, UserID){
         if (err) return "unable to find User"
         if (u.postedtextbooks.includes({"id": textbookID})){
             u.postedtextbooks.delete({"id": textbookID});
+            deleteTextbook(textbookID);
             return u;
         }
         else return "User does not have textbook";
