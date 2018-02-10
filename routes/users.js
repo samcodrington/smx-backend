@@ -61,13 +61,13 @@ router.post('/createInfo', urlencodedParser, function(req,res,next){
   console.log("Post Request - CreateInfo");
   addUserInfo(req.body).then(function(resolve){
       //user added Successfully
-      res.send("Successfully signed up user");
+      res.send(resolve);
       console.log("Successfully signed up user");
       next();
     }).catch( function(err){
       // need error handling
     console.log(err);
-    res.send("Unsuccessfuly signed up user");
+    res.send("-1");
     console.log("Unsuccessfuly signed up user");
   });
 });

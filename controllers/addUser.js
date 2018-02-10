@@ -33,6 +33,10 @@ return  User.findOne({username: FrontendUser.username})
         return Promise.reject("User is taken");
       }
       else {
+        //make sure password is validated
+        return ensurePasswordValid(FrontendUser);
+      }
+    }).then(function(resolve){
         //Create instance of User model (Document) and parse in user data
         var newUser = new User({
           username: FrontendUser.username,
@@ -40,19 +44,24 @@ return  User.findOne({username: FrontendUser.username})
         });
         //return promise on previous promise and saving record to database
         return newUser.save();
-      }
-  })
+      });
 };
 
 //supporting functions for addUser function
 
+//Returns a resolved promise based on whether the user password is validated
+//rejects the promise if password is invalid
+ensurePasswordValid = function(user){
+  if(user.password == undefined){
+    //this should throw an error to frontend
+    return Promise.reject("No password");
+  }
+  return Promise.resolve("Password is validated");
+}
+
 //Returns a resolved promise based on whether the user parameters are validated
 //rejects the promise if parameters are invalid
 ensureUserValid = function(user){
-    if(user.password == undefined){
-      //this should throw an error to frontend
-      return Promise.reject("No password");
-    }
     if(user.nameFirst == undefined){
       //behaviour on no name being entered. My thought right now is that we
       //keep to nosql design and not waste storage by storing a default value
@@ -63,9 +72,9 @@ ensureUserValid = function(user){
       //See nameFirst
       return Promise.reject("No last name");
     }
-    if (ensureEmailValid(user.email) == 0){
+    if (user.email == undefined){
       //this should throw an error to frontend
-      return Promise.reject("invalid email");
+      return Promise.reject("No email");
     }
     if (user.school == undefined){
       //could either implement this as a dropdown list or try to match the string
@@ -73,20 +82,3 @@ ensureUserValid = function(user){
     }
     return Promise.resolve("User is validated");
 }
-
-
-//returns a 1 if email is valid
-ensureEmailValid = function(email){
-  //string is valid if it is in the form string@string.string
-  var at = email.indexOf("@");
-  var atLast = email.lastIndexOf("@");
-  var periodLast = email.indexOf(".");
-  //ensure only one occurence of @ sign
-  //ensure a period (for web domain occcurs after @ sign)
-  if (at == atLast && periodLast > atLast){
-    return 1;
-  }
-  else {
-    return 0;
-  }
-};
