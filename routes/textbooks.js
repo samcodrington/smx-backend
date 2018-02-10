@@ -59,7 +59,7 @@ router.post('/post', urlencodedParser, function(req,res,next){
   }).catch( function(err){
     // need error handling
   console.log(err);
-  res.send('-1');
+  res.status(401).send("unable to post textbook: " + err);
   console.log("Error textbook not posted");
   });
 })
@@ -85,16 +85,15 @@ router.get('/get/:ID', urlencodedParser, function(req,res,next){
 router.delete('/delete/:ID', urlencodedParser, function(req,res,next){
   console.log("DELETE request - Mark Textbook sold");
   if(req.user){
-    deleteTextbookFromUser(req.user, req.params.ID).then(function(resolve){
-      console.log("resolve: " + JSON.stringify(resolve));
+    console.log ("user logged in"); //TODO deleteme
+    deleteTextbookFromUser(req.user, req.params.ID)
+    .then(function(resolve){
       res.send(resolve);
       console.log("Successfully Deleted Textbook");
-    
     }).catch(function(err){
       // need error handling
       console.log(err);
-      res.send('-1');
-      console.log("Error could not find textbook");
+      res.status(402).send("Error deleting textbook: "+ err);
     });
   } else {
     console.log("No User Logged In");
