@@ -2,6 +2,23 @@ const mongoose = require('mongoose');
 const User = require("../models/userSchema");
 
 //adds user FrontendUser to the database with error checking
+exports.addUserInfo = function(FrontendUser){
+  return ensureUserValid(FrontendUser)
+    .then( function(resolve){
+      //update the user information
+      return User.findByIdAndUpdate(
+        FrontendUser._id,
+        {nameFirst: user.nameFirst,
+          nameLast: user.nameLast,
+          email: user.email,
+          school: user.school
+        });
+  });
+}
+
+//adds user FrontendUser to the database with error checking
+//this method solely adds username and password data
+//this addUserInfo method takes care of the rest of the data
 exports.addUser = function(FrontendUser){
   //perform basic error checking on user object
   //ensure that username is unique (i.e. hasn't already been taken)
@@ -16,23 +33,15 @@ return  User.findOne({username: FrontendUser.username})
         return Promise.reject("User is taken");
       }
       else {
-        //perform error checking on user
-        return ensureUserValid(FrontendUser);
+        //Create instance of User model (Document) and parse in user data
+        var newUser = new User({
+          username: FrontendUser.username,
+          password: FrontendUser.password,
+        });
+        //return promise on previous promise and saving record to database
+        return newUser.save();
       }
   })
-  .then( function(resolve){
-    //Create instance of User model (Document) and parse in user data
-    var newUser = new User({
-      username: FrontendUser.username,
-      password: FrontendUser.password,
-      nameFirst: FrontendUser.nameFirst,
-      nameLast: FrontendUser.nameLast,
-      email: FrontendUser.email,
-      school: FrontendUser.school,
-    });
-    //return promise on previous promise and saving record to database
-    return Promise.all(resolve,newUser.save());
-  });
 };
 
 //supporting functions for addUser function
