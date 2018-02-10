@@ -24,26 +24,20 @@ exports.deleteTextbookFromUser = function(UserID, textbookID){
     return new Promise(function(resolve, reject){
         User.findById(UserID)
         .then(function (u){ 
-            
-            console.log ("found user");
             if (!isEmpty(u)){
-                
-                console.log("not empty");
-                var ind = userContainsTBook(u, textbookID);
-                console.log ("INdice: " + ind);
-                
+                //get indice of textbook in postedTextbooks
+                var ind = userContainsTBook(u, textbookID);                
                 //if textbook not attached to user
                 if (ind == 0){
-                    console.log("rejecting stuff");
                     
                     return reject("Textbook not associated with user.\nAssociated IDs are: \n"+ u.postedtextbooks);
 
                 } else {
-                    u.postedtextbooks.splice(ind);
-                    console.log("does this work!");
                     
+                    u.postedtextbooks.splice(ind);                    
                     u.save(function(err, newU){
                         if (err) return reject("couldn't update User");
+                        //if User is updated, remove textbook from Textbook collection
                         else {
                             Textbook.findByIdAndRemove(textbookID)
                             .then(()=>{ return resolve(newU);})
@@ -52,7 +46,9 @@ exports.deleteTextbookFromUser = function(UserID, textbookID){
                     });                
                 }
             }
-        }).catch(function(err){return reject(err);});
+        })
+        //Should not reach this - this is only if Logged In User can't be found in database
+        .catch(function(err){return reject(err);});
     });
 }
 
