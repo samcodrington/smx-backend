@@ -4,7 +4,10 @@ const User = require("../models/userSchema");
 
 //returns one textbook object based on its ID
 exports.getOneTextbook = function(textbookID){
-  return Textbook.findById(textbookID);
+  var email;
+  return Textbook.findById(textbookID).then(function(resolve){
+    return Promise.all([resolve,getUserEmail(resolve.owner)]);
+  })
 };
 
 //returns an array of textbook objects based on the IDs stored in the user
@@ -34,3 +37,13 @@ exports.getUserPostedTextbook = function(userID){
       return Textbook.find({'_id' : { $in: textbookObjectId } });
   })
 };
+
+
+//utility functions
+
+//return the email of the user which owners the textbook
+getUserEmail = function(id){
+  return User.findById(id).then(function(resolve){
+    return Promise.resolve({email: resolve.email});
+  })
+}
