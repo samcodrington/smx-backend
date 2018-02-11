@@ -14,6 +14,6 @@ const userSchema = new Schema({
 }, {timestamps: {createdAt: 'created_at'}//timestamps store UTC time by default
 });
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model(process.env.REACT_APP_USER_COLLECTION || "user", userSchema);
 
 module.exports = User;
