@@ -56,8 +56,8 @@ thumbnail = function(title){
  return new Promise(function(resolve,reject){
   books.search(title, function(err, data) {
     if (err !== null) return reject(err);
-    console.log("here: " + data);
-    resolve(data[0].thumbnail);
+    console.log(data);
+    resolve(data[0].thumbnail.replace('zoom=1', 'zoom=0'));
   })
  });
 }
