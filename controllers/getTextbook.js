@@ -47,7 +47,7 @@ exports.getUserPostedTextbook = function(userID){
 //return the email of the user which owners the textbook
 getUserEmail = function(id){
   return User.findById(id).then(function(resolve){
-    return Promise.resolve({email: resolve.email});
+    return Promise.resolve(resolve.email);
   })
 }
 
@@ -57,7 +57,7 @@ thumbnail = function(title){
   books.search(title, function(err, data) {
     if (err !== null) return reject(err);
     console.log("here: " + data);
-    resolve({thumbnail: data[0].thumbnail});
+    resolve(data[0].thumbnail);
   })
  });
 }
