@@ -9,10 +9,7 @@ var books = require('google-books-search');
 exports.getOneTextbook = function(textbookID){
   var title;
   return Textbook.findById(textbookID).then(function(resolve){
-    title = resolve.title
-    return Promise.all([resolve,getUserEmail(resolve.owner)]);
-  }).then(function(resolve){
-    return Promise.all([resolve,thumbnail(title)]);
+    return Promise.all([resolve,getUserEmail(resolve.owner),thumbnail(resolve.title)]);
   })
 };
 
