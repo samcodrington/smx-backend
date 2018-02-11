@@ -17,7 +17,7 @@ function userContainsTBook (user, tid){
         if (t == tid) return i;
         i++;
     }
-    return 0;
+    return -1;
 }
 
 exports.deleteTextbookFromUser = function(UserID, textbookID){
@@ -28,7 +28,7 @@ exports.deleteTextbookFromUser = function(UserID, textbookID){
                 //get indice of textbook in postedTextbooks
                 var ind = userContainsTBook(u, textbookID);                
                 //if textbook not attached to user
-                if (ind == 0){
+                if (ind == -1){
                     
                     return reject("Textbook not associated with user.\nAssociated IDs are: \n"+ u.postedtextbooks);
 
