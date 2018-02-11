@@ -13,7 +13,7 @@ exports.addUserInfo = function(FrontendUser){
           nameLast: FrontendUser.nameLast,
           email: FrontendUser.email,
           school: FrontendUser.school
-        });
+        }, {new: true});
   });
 }
 
