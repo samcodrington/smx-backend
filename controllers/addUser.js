@@ -6,12 +6,13 @@ exports.addUserInfo = function(FrontendUser){
   return ensureUserValid(FrontendUser)
     .then( function(resolve){
       //update the user information
+      console.log(FrontendUser._id);
       return User.findByIdAndUpdate(
         FrontendUser._id,
-        {nameFirst: user.nameFirst,
-          nameLast: user.nameLast,
-          email: user.email,
-          school: user.school
+        {nameFirst: FrontendUser.nameFirst,
+          nameLast: FrontendUser.nameLast,
+          email: FrontendUser.email,
+          school: FrontendUser.school
         });
   });
 }
