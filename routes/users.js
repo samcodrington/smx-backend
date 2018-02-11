@@ -4,6 +4,7 @@ var router = express.Router();
 //Add userMethods
 var userMethods = require('../controllers/addUser');
 var addUser = userMethods.addUser;
+var addUserInfo = userMethods.addUserInfo;
 var validateUserLogin = userMethods.validateUserLogin;
 
 //Add textbook methods
@@ -45,13 +46,28 @@ router.post('/create', urlencodedParser, function(req,res,next){
   console.log("Post Request - Create");
   addUser(req.body).then(function(resolve){
       //user added Successfully
-      res.send("Successfully signed up user");
+      res.send(resolve._id);//send the user id to the frontend
+      console.log("Successfully signed up user");
+      next();
+    }).catch( function(err){
+    console.log(err);
+    res.send("-1");//send an error status
+    console.log("Unsuccessfuly signed up user");
+  });
+});
+
+/* POST users listing. */
+router.post('/createInfo', urlencodedParser, function(req,res,next){
+  console.log("Post Request - CreateInfo");
+  addUserInfo(req.body).then(function(resolve){
+      //user added Successfully
+      res.send(resolve);
       console.log("Successfully signed up user");
       next();
     }).catch( function(err){
       // need error handling
     console.log(err);
-    res.send("Unsuccessfuly signed up user");
+    res.send("-1");
     console.log("Unsuccessfuly signed up user");
   });
 });
