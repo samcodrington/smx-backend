@@ -9,14 +9,16 @@ passport.use('login', new LocalStrategy({
     //Verify Callback function
     function(username, password, done){
         User.findOne({username: username}, function (err, user){
+            var mssg = null;
             if (err) {
-                console.log('error!');
-                return done(err); }
-            if (!user) {
-                console.log('error! can\'t find user');
-                return done(err, false);}
-            if (user.password != password){
-                console.log('error! wrong password');
+                return done("Internal Error During Authentication Please try Again"); 
+            } if (!user) {
+                mssg = 'User does not exist in database';
+                console.log(mssg);
+                return done(err, false);
+            } if (user.password != password){
+                mssg = 'Password is Incorrect';
+                console.log(mssg);
                 return done(err, false);
             }
             console.log('found user');

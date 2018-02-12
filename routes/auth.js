@@ -19,11 +19,24 @@ router.use('*', function(req,res,next){
 });
 
 /* POST user login */
-router.post('/login', passport.authenticate('login'),
-    function(req,res){
-        console.log('accessing login');
-        //console.log(res.req.headers.cookie); //this is where cookie is returned.
-        res.status(200).send(req.user);
+router.post('/login', function(req, res, next) {
+    passport.authenticate('login', function(err, user, info) {
+      console.log("running custom auth");
+      if (err) {
+        return next(err); // will generate a 500 error
+      }
+      // Generate a JSON response reflecting authentication status
+      if (! user) {
+        return res.status(400).send('Incorrect Username');
+      }
+     //need to req.login manually
+      req.login(user, loginErr => {
+        if (loginErr) {
+          return res.status(400).send("Incorrect Password for Username");
+        }
+        return res.status(200).send(req.user);
+      });      
+    })(req,res,next)
 });
 
 router.post('/logout', function(req,res) {
