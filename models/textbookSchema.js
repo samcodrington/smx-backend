@@ -14,6 +14,6 @@ const textbookSchema = new Schema({
   Tags: [String]            //Optional tags field to for searching
 });
 
-const Textbook = mongoose.model("textbook", textbookSchema);
+const Textbook = mongoose.model(process.env.REACT_APP_TEXTBOOK_COLLECTION || "textbook", textbookSchema);
 
 module.exports = Textbook;

@@ -16,6 +16,7 @@ exports.postTextbook = function(FrontendTextbook, uid){
       publisher: FrontendTextbook.publisher,
       author: FrontendTextbook.author,
       price: FrontendTextbook.price,
+      owner: uid,
     });
     //save textbook entry into the database
     return  newTextbook.save();

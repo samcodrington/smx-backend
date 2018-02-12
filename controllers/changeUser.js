@@ -19,7 +19,7 @@ exports.changeUser = function(user, useCase){
       return Promise.reject("user parameters missing");
     }
     else {//parameters exist, updating user
-    return User.findByIdAndUpdate(user._id, {nameFirst: user.nameFirst, nameLast: user.nameLast, email: user.email, school: user.school});
+    return User.findByIdAndUpdate(user._id, {nameFirst: user.nameFirst, nameLast: user.nameLast, email: user.email, school: user.school}, {new: true});
     }
   }
   else if (useCase==2){//Account form
@@ -28,11 +28,11 @@ exports.changeUser = function(user, useCase){
     if (!(user.username===undefined)){//username is being updated
       return checkUsername(user.username)
       .then(function(resolve){//new username is unique
-        return Promise.all(resolve, User.findByIdAndUpdate(user._id, {username: user.username, password: user.password}));
+        return Promise.all(resolve, User.findByIdAndUpdate(user._id, {username: user.username, password: user.password}, {new: true}));
       });
     }
     else { //only password change
-      return User.findByIdAndUpdate(user._id, {password: user.password});
+      return User.findByIdAndUpdate(user._id, {password: user.password}, {new: true});
     }
   }
   else if (useCase==3){//Delete account
