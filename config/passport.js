@@ -15,11 +15,11 @@ passport.use('login', new LocalStrategy({
             } if (!user) {
                 mssg = 'User does not exist in database';
                 console.log(mssg);
-                return done(err, false);
+                return done(err, false, mssg);
             } if (user.password != password){
                 mssg = 'Password is Incorrect';
                 console.log(mssg);
-                return done(err, false);
+                return done(err, false, mssg);
             }
             console.log('found user');
             return done(null, user);
