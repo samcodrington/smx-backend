@@ -35,5 +35,9 @@ passport.deserializeUser(function(id, done){
     console.log('User ID is:' + id);
     User.findOne({_id: id}).then((user) => {
         done(null, user.id);
-    })
+    }).catch( function(err){
+      // need error handling
+    console.log(err);
+    console.log("Error user not found in DB");
+    });
 });
