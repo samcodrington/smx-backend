@@ -37,9 +37,6 @@ router.post('/login', function(req, res, next) {
         return res.status(200).send(req.user);
       });      
     })(req,res,next)
-}, function(req,res){
-    //console.log(res.req.headers.cookie); //this is where cookie is returned.
-    res.status(200).send(req.user);
 });
 
 router.post('/logout', function(req,res) {
