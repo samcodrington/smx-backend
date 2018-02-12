@@ -21,20 +21,23 @@ router.use('*', function(req,res,next){
 /* POST user login */
 router.post('/login', function(req, res, next) {
     passport.authenticate('login', function(err, user, info) {
-      console.log("running custom auth");
+      var mssg = {body: null};
+        console.log("running custom auth");
       if (err) {
         return next(err); // will generate a 500 error
       }
       // Generate a JSON response reflecting authentication status
-      if (! user) {
-        return res.status(400).send('Incorrect Username');
+      if (!user) {
+        mssg.body = info;
+        return res.status(400).send(mssg);
       }
      //need to req.login manually
       req.login(user, loginErr => {
         if (loginErr) {
-          return res.status(400).send("Incorrect Password for Username");
+            mssg.body = "Bad Login - Error Logging In";
+          return res.status(500).send(mssg);
         }
-        return res.status(200).send(req.user);
+        return res.status(200).send(user);
       });      
     })(req,res,next)
 });
