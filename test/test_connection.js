@@ -12,7 +12,7 @@ before(function(done){    //tells mocha to wait before running tests
   });
 
   mongoose.connection.once("open",function(){
-    console.log("connection succesfull");
+    console.log("Connected to test database");
     done(); //tell mocha it was succesfull
   }).on("error",function(error){
     console.log("database connection error");
