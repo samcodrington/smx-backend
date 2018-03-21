@@ -18,12 +18,17 @@ exports.getOneTextbook = function(textbookID){
 exports.getUserSavedTextbook = function(userID){
   return User.findById(userID)
   .then( function(resolve){
+      if (resolve){
       //convert the ID array into an objectID array for the find function
       const textbookObjectId = resolve.savedtextbooks.map( function(element){
         return new mongoose.Types.ObjectId(element);
       });
       //returns all textbooks which have an _id which matches
       return Textbook.find({'_id' : { $in: textbookObjectId } });
+      }
+      else {
+        return Promise.reject("Cannot read saved textbooks of user");
+      }
   })
 };
 
@@ -32,12 +37,17 @@ exports.getUserSavedTextbook = function(userID){
 exports.getUserPostedTextbook = function(userID){
   return User.findById(userID)
   .then( function(resolve){
+      if (resolve){
       //convert the ID array into an objectID array for the find function
       const textbookObjectId = resolve.postedtextbooks.map( function(element){
         return new mongoose.Types.ObjectId(element);
       });
       //returns all textbooks which have an _id which matches
       return Textbook.find({'_id' : { $in: textbookObjectId } });
+      }
+      else {
+        return Promise.reject("Cannot read posted textbooks of user");
+      }
   })
 };
 
@@ -56,7 +66,7 @@ thumbnail = function(title){
  return new Promise(function(resolve,reject){
   books.search(title, function(err, data) {
     if (err !== null) return reject(err);
-    console.log(data);
+    //console.log(data);
     resolve(data[0].thumbnail.replace('zoom=1', 'zoom=0'));
   })
  });
