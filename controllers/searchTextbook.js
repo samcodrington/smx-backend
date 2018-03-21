@@ -6,10 +6,11 @@ exports.searchTextbook = function(searchField){
   //perform basic error checking on the searchField variable
   if (searchField === ''){
     //return promise error
+    return Promise.reject("searchField is blank");
   }
   //parse a regular expression to use in search query
   var searchString = parseRegularExpression(searchField);
-  console.log("searchString=" + searchString);
+  //console.log("searchString=" + searchString);
   return  Textbook.find({$or:[
     {title: searchString},
     {isbn: searchString},
@@ -23,8 +24,8 @@ exports.searchTextbook = function(searchField){
     //Tags: [String]            //Optional tags field to for searching
   ]})
   .then(function(resolve){
-    console.log(JSON.stringify(resolve));
-    console.log("Number of results: "+resolve.length);
+    //console.log(JSON.stringify(resolve));
+    //console.log("Number of results: "+resolve.length);
     //call orderResponse with resolve object
     if (!isEmpty(resolve)){ //resolve promise if object not emptpy, i.e. at least one result was found
     return Promise.resolve(resolve);
