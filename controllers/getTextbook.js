@@ -2,9 +2,15 @@ const mongoose = require('mongoose');
 const Textbook = require("../models/textbookSchema");
 const User = require("../models/userSchema");
 
+var books = require('google-books-search');
+
+
 //returns one textbook object based on its ID
 exports.getOneTextbook = function(textbookID){
-  return Textbook.findById(textbookID);
+  var title;
+  return Textbook.findById(textbookID).then(function(resolve){
+    return Promise.all([resolve,getUserEmail(resolve.owner),thumbnail(resolve.title)]);
+  })
 };
 
 //returns an array of textbook objects based on the IDs stored in the user
@@ -34,3 +40,24 @@ exports.getUserPostedTextbook = function(userID){
       return Textbook.find({'_id' : { $in: textbookObjectId } });
   })
 };
+
+
+//utility functions
+
+//return the email of the user which owners the textbook
+getUserEmail = function(id){
+  return User.findById(id).then(function(resolve){
+    return Promise.resolve(resolve.email);
+  })
+}
+
+//use the google books api to return a textbook thumbnail
+thumbnail = function(title){
+ return new Promise(function(resolve,reject){
+  books.search(title, function(err, data) {
+    if (err !== null) return reject(err);
+    console.log(data);
+    resolve(data[0].thumbnail.replace('zoom=1', 'zoom=0'));
+  })
+ });
+}
