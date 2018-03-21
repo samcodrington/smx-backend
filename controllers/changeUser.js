@@ -13,7 +13,7 @@ const Textbook = require("../models/textbookSchema");
 exports.changeUser = function(user, useCase){
   //determine which fields are being changed
   if (useCase==1){//Profile form
-    console.log("Use case 1");
+    //console.log("Use case 1");
     if (user.nameFirst === undefined || user.nameLast === undefined || user.email === undefined || user.school === undefined){
       //one or more parameters invalid, reject
       return Promise.reject("user parameters missing");
@@ -23,7 +23,7 @@ exports.changeUser = function(user, useCase){
     }
   }
   else if (useCase==2){//Account form
-    console.log("Use case 2");
+    //console.log("Use case 2");
     //Assume valid password determined by frontend
     if (!(user.username===undefined)){//username is being updated
       return checkUsername(user.username)
@@ -36,7 +36,7 @@ exports.changeUser = function(user, useCase){
     }
   }
   else if (useCase==3){//Delete account
-      console.log("Use case 3");
+      //console.log("Use case 3");
       //delete posts associated with the user
       return Textbook.deleteMany({owner: user._id})
       .then(function(resolve){
@@ -76,7 +76,7 @@ checkUsername = function(username){
       //null object
       if (resolve){
           //this should throw an error to frontend
-          console.log("USER TAKEN");
+          //console.log("USER TAKEN");
           return Promise.reject("User is taken");
         }
         else {
