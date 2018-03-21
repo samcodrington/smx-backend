@@ -4,7 +4,7 @@ const User = require("../models/userSchema");
 
 //adds textBook FrontendTextbook to the database with error checking
 exports.postTextbook = function(FrontendTextbook, uid){
-  console.log("User Id is" + uid);
+  //console.log("User Id is" + uid);
   //perform basic error checking on textbook object
   return ensureTextbookValid(FrontendTextbook)
   .then(function(resolve){
