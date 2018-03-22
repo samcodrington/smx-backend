@@ -12,6 +12,8 @@ describe("Adding User (addUser() controller)",function(){
   it("Attempt to delete the test user from the database", function(done){
     User.deleteOne({username: 'testMocha'}).then(function(){
       done();//tell mocha that test is done
+    }).catch(function(err){
+      done(err);
     });
   });
 
